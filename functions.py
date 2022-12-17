@@ -108,8 +108,9 @@ def fetch_data(sites):
                 "site_id" : site["id"],
                 "articles": []
             }
+            print("Created dict for", site["name"])
             for article in articles:
-                
+                print("Creating article " + str(article[0]) + " for " + site["name"] + "...")
                 articles = {
                         "article_ID" : article[0],
                         "article_body" : article[2],
@@ -118,5 +119,4 @@ def fetch_data(sites):
                         }
                 dict["articles"].append(articles)
             data.append(dict)
-        print(data)
         return data
