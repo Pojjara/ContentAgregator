@@ -14,3 +14,12 @@
 .article-item a:hover {
     color: #d1d1d1;
 }
+
+.article-text {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.card-group {
+    display: flex;
+}
