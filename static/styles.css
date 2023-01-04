@@ -1,8 +1,13 @@
+.main {
+    display: flex;
+}
+
 .fcb {
     padding: 10px;
 }
 
 .article-item a {
+    display: block;
     color: #d1d1d1;
     text-decoration: underline;
 }
@@ -22,4 +27,10 @@
 
 .card-group {
     display: flex;
+}
+
+.row {
+    max-width: 33.33%;
+    max-height: 600px;
+    text-overflow: clip;
 }

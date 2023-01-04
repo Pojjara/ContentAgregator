@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card-group {
+    display: flex;
+    flex-wrap: wrap;
+    /* add flex-wrap: wrap to allow the cards to wrap onto multiple lines */
+    justify-content: space-between;
+}
+
+.card {
+    width: calc(50% - 20px);
+    /* make the cards half the width of the container */
+    height: 500px;
+    /* set a fixed height for the cards */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card .logo {
+    height: 200px;
+    overflow: hidden;
+}
+
+.card .logo img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.card-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-body a {
+    color: #767f8d
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.article-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 50px;
+    /* set a fixed height for the article items */
+    overflow: hidden;
+    /* add overflow: hidden to hide any content that overflows the fixed height */
+}
+
+.article-item:hover .article-text {
+    color: #8e99aa;
+}
+
+.article-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    /* increase the font size for the article titles */
+    text-decoration: none;
+    /* remove the text-decoration for the article titles */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* add justify-content: center to center the image within the logo element */
+    height: 200px;
+    overflow: hidden;
+}
+
+.logo img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    /* add object-fit: cover to stretch the image to fit the size of the logo element */
+}
+
+
+/* NaVBAR */
+
+.navbar {
+    font-size: 1.1em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    color: #333;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: #007bff;
+}
