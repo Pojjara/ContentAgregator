@@ -95,7 +95,7 @@ def getArticlesFromSites(sites):
 
         elif site['name'] == "Dziennik Naukowy":
 
-
+            #Just testing if github works
             # Find the articles
             articles = soup.find_all("div", class_="article-list")
             site_id = site['id']
