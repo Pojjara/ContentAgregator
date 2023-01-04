@@ -33,16 +33,6 @@ def initializeDB():
 
     conn.close()
 
-# Write a header row to the CSV file
-with open('articles.csv', 'w', newline='', encoding='utf-8') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(['Title', 'Body', 'Link', 'Site ID'])
-
-# Write a header row to the Excel file
-wb = openpyxl.Workbook()
-sheet = wb.active
-sheet.append(['Title', 'Body', 'Link', 'Site ID'])
-wb.save('articles.xlsx')
     
 def addSitesToDB(sites):
     for site in sites:
