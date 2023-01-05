@@ -1,8 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, g
 import requests, bs4
-from flask_mysqldb import MySQL
 import sqlite3
-from functions import *
+from webscraping import *
 from ListOfSites import sites
 
 app = Flask(__name__)
