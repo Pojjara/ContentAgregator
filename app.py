@@ -5,7 +5,7 @@ from webscraping import *
 from ListOfSites import sites
 
 app = Flask(__name__)
-#initializeDB("database.db")
+#("database.db")
 #addSitesToDB(sites)
 getArticlesFromSites(sites)
 

@@ -190,9 +190,9 @@ def fetch_data(sites):
             for article in articles:
                 articles = {
                         "article_ID" : article[0],
-                        "article_title" : article[4],
-                        "article_body" : article[2],
-                        "article_link" : article[3]                        
+                        "article_title" : article[2],
+                        "article_body" : article[3],
+                        "article_link" : article[4]                        
                         }
                 dict["articles"].append(articles)
             data.append(dict)

@@ -61,11 +61,7 @@ def fetchArticlesForSite(db, table, siteID):
 def insertIntoDB(article_title,article_body,article_link,site_id,connection):
     cursor = connection.cursor()
     current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    cursor.execute('''INSERT INTO articles(article_title,article_body,article_link,site_ID, date) SELECT ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM articles WHERE article_body = ?)''', (article_title, article_body, article_link, site_id, current_date, article_body))
-
-    add_to_csv(article_title, article_body, article_link, site_id)
-
-    add_to_excel(article_title, article_body, article_link, site_id)
+    cursor.execute('''INSERT INTO articles(article_title,article_body,article_link,site_ID, date) SELECT ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM articles WHERE article_link = ?)''', (article_title, article_body, article_link, site_id, current_date, article_link))
 
 def openDBconnection(db):
     try:
