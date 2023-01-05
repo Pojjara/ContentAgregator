@@ -1,6 +1,7 @@
 import sqlite3
 import csv
 import openpyxl
+import logging
 
 def initializeDB():
     conn = sqlite3.connect('database.db')
@@ -76,13 +77,10 @@ def add_to_excel(article_title, article_body, article_link, site_id):
         sheet.append([article_title, article_body, article_link, site_id])
         wb.save('articles.xlsx')
 
-def insertIntoDB(article_title,article_body,article_link,site_id):
-    connection = sqlite3.connect("database.db")
+def insertIntoDB(article_title,article_body,article_link,site_id,connection):
     cursor = connection.cursor()   
     cursor.execute('INSERT INTO articles(article_title,article_body,article_link,site_ID) VALUES(?,?,?,?)', (article_title,article_body,article_link,site_id))
-    connection.commit()
-    connection.close()
-
+    
     add_to_csv(article_title, article_body, article_link, site_id)
 
     add_to_excel(article_title, article_body, article_link, site_id)
@@ -104,3 +102,19 @@ def fetchArticlesForSite(db, table, siteID):
         data = cur.fetchall()
         cur.close()
         return data
+
+
+
+def openDBconnection(db):
+    try:
+        connection = sqlite3.connect(db)
+        return connection
+    except Exception as e:
+        logging.exception("Error opening Databse connection: {}".format(e))
+
+def commitAndCcloseDBconnection(connection):
+    try:
+        connection.commit()
+        connection.close()
+    except Exception as e:
+        logging.exception("Error closing Databse connection: {}".format(e))
