@@ -3,6 +3,7 @@ from databaseCode import *
 import logging
 
 HOW_MANY_ARTICLES = 100
+xARTICLES = 0
 
 def scrape_articles(site):
     try:
@@ -89,6 +90,7 @@ def insert_articles(articles, site_id):
     connection = openDBconnection('database.db')
     try:
         for article in articles:
+            xARTICLES =+ 1
             article_title = article['title']
             article_body = article['body']
             article_link = article['link']
@@ -104,6 +106,8 @@ def getArticlesFromSites(sites):
         articles = scrape_articles(site)
         print(f"Succesfully scraped data from {site['name']} \u2713")
         insert_articles(articles, site['id'])
+    if xARTICLES > 0:
+        print(xARTICLES, " Article Added !")
 
 
 # def getArticlesFromSites(sites):
@@ -178,9 +182,10 @@ def getArticlesFromSites(sites):
 #             print(f"Error while fetching articles from {site['name']}: {e}")
 
 def fetch_data(sites):
-    
+        
         data = []
         for site in sites:
+            remove_old_articles("database.db", site['id'])
             articles = fetchArticlesForSite("database.db","articles", site["id"], HOW_MANY_ARTICLES)
             dict = {
                 "site_name": site["name"],

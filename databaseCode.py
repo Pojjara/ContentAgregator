@@ -77,3 +77,14 @@ def commitAndCloseDBconnection(connection):
         connection.close()
     except Exception as e:
         logging.exception("Error closing Databse connection: {}".format(e))
+
+def remove_old_articles(db, site_id):
+    with sqlite3.connect(db) as con:
+        cur = con.cursor()
+        # Get the number of articles for the given site
+        cur.execute(f'SELECT COUNT(*) FROM articles WHERE site_id = {site_id}')
+        num_articles = cur.fetchone()[0]
+        # If there are more than 15 articles, delete the oldest ones
+        if num_articles > 15:
+            num_to_delete = num_articles - 15
+            cur.execute(f'DELETE FROM articles WHERE site_id = {site_id} ORDER BY date ASC LIMIT {num_to_delete}')
