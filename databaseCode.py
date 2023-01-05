@@ -74,7 +74,7 @@ def openDBconnection(db):
     except Exception as e:
         logging.exception("Error opening Databse connection: {}".format(e))
 
-def commitAndCcloseDBconnection(connection):
+def commitAndCloseDBconnection(connection):
     try:
         connection.commit()
         connection.close()
