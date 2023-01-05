@@ -96,7 +96,44 @@ def getArticlesFromSites(sites):
                 article_link = article.find(class_='read-more')['href']
                 insertIntoDB(article_title,article_body[40:-141],article_link,site_id)
                 
-        
+
+def add_to_csv(article_title, article_body, article_link, site_id):
+    # Read the existing data from the CSV file
+    with open('articles.csv', 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        rows = [row for row in reader]
+
+    # Check if the article already exists in the CSV file
+    article_exists = False
+    for row in rows:
+        if row[2] == article_link:
+            article_exists = True
+            break
+
+    # If the article doesn't already exist, add it to the CSV file
+    if not article_exists:
+        with open('articles.csv', 'a', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([article_title, article_body, article_link, site_id])
+
+def add_to_excel(article_title, article_body, article_link, site_id):
+    # Load the existing data from the Excel file
+    wb = openpyxl.load_workbook('articles.xlsx')
+    sheet = wb.active
+    rows = sheet.values
+
+    # Check if the article already exists in the Excel file
+    article_exists = False
+    for row in rows:
+        if row[2] == article_link:
+            article_exists = True
+            break
+
+    # If the article doesn't already exist, add it to the Excel file
+    if not article_exists:
+        sheet.append([article_title, article_body, article_link, site_id])
+        wb.save('articles.xlsx')
+
 
 def insertIntoDB(article_title,article_body,article_link,site_id):
     connection = sqlite3.connect("database.db")
@@ -105,16 +142,9 @@ def insertIntoDB(article_title,article_body,article_link,site_id):
     connection.commit()
     connection.close()
 
-    # Write the information to a CSV file
-    with open('articles.csv', 'a', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([article_title, article_body, article_link, site_id])
+    add_to_csv(article_title, article_body, article_link, site_id)
 
-    # Write the information to an Excel file
-    wb = openpyxl.load_workbook('articles.xlsx')
-    sheet = wb.active
-    sheet.append([article_title, article_body, article_link, site_id])
-    wb.save('articles.xlsx')
+    add_to_excel(article_title, article_body, article_link, site_id)
 
 def fetchAllFromTable(db, table):
     with sqlite3.connect(db) as con:
