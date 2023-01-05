@@ -29,7 +29,6 @@ def initializeDB():
 
     conn.close()
 
-
 def addSitesToDB(sites):
     for site in sites:
         siteName = site["name"]
@@ -76,7 +75,6 @@ def add_to_excel(article_title, article_body, article_link, site_id):
     if not article_exists:
         sheet.append([article_title, article_body, article_link, site_id])
         wb.save('articles.xlsx')
-
 
 def insertIntoDB(article_title,article_body,article_link,site_id):
     connection = sqlite3.connect("database.db")
