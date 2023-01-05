@@ -43,13 +43,16 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ site.site_name }}</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for article in site.articles %}
-                        <li class="article-item list-group-item text-white bg-dark"><a class="article-text text-truncate" data-toggle="popover" data-placement="top" title="{{ article.article_body }}" href="{{ article.article_link }}">{{ article.article_title }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="article-list" style="height: 300px; overflow-y: auto;">
+                        <ul class="list-group list-group-flush">
+                            {% for article in site.articles %}
+                            <li class="article-item list-group-item text-white bg-dark"><a class="article-text text-truncate" data-toggle="popover" data-placement="top" title="{{ article.article_body }}" href="{{ article.article_link }}">{{ article.article_title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
+
             </div>
 
             {% endfor %}

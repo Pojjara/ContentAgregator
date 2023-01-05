@@ -82,6 +82,26 @@ body {
     /* remove the text-decoration for the article titles */
 }
 
+
+/* Scrollbar */
+
+.article-list::-webkit-scrollbar {
+    width: 10px;
+    background-color: #212529;
+}
+
+.article-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #2a2f34;
+}
+
+.article-list::-webkit-scrollbar-thumb:hover {
+    background-color: #4e5761;
+}
+
+
+/*  */
+
 .logo {
     display: flex;
     align-items: center;

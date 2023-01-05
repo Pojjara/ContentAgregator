@@ -5,6 +5,7 @@ import logging
 import datetime
 
 
+
 def initializeDB(db):
     conn = sqlite3.connect(db)
     print("Opened database successfully \u2713") 
@@ -50,10 +51,10 @@ def fetchAllFromTable(db, table):
         cur.close()
         return data
 
-def fetchArticlesForSite(db, table, siteID):
+def fetchArticlesForSite(db, table, siteID, HOW_MANY_ARTICLES):
     with sqlite3.connect(db) as con:
         cur = con.cursor()
-        cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID} ORDER BY date DESC LIMIT 5")
+        cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID} ORDER BY date DESC LIMIT {HOW_MANY_ARTICLES}")
         data = cur.fetchall()
         cur.close()
         return data

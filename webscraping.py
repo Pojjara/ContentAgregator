@@ -2,6 +2,8 @@ import requests, bs4
 from databaseCode import *
 import logging
 
+HOW_MANY_ARTICLES = 100
+
 def scrape_articles(site):
     try:
         # Make the HTTP request
@@ -15,7 +17,7 @@ def scrape_articles(site):
                     try:
                         articles_list = soup.select('.news__list')[0]
                         articles = []
-                        for i in range(5):
+                        for i in range(HOW_MANY_ARTICLES):
                             # Finds all articles
                             article = articles_list.find_all(class_='article')[i] 
                             # Gets titles from articles
@@ -35,7 +37,7 @@ def scrape_articles(site):
                     try:
                         # Finds all articles
                         articles_list = soup.find_all('div', class_='gs-c-promo-body')
-                        xOfArticles = 5
+                        xOfArticles = HOW_MANY_ARTICLES
                         articles = []
                         for article in articles_list[:xOfArticles]:
                             try:
@@ -61,7 +63,7 @@ def scrape_articles(site):
                         # Find the articles
                         articles_list = soup.find_all("div", class_="article-list")
                         articles = []
-                        for article in articles_list[:5]:
+                        for article in articles_list[:HOW_MANY_ARTICLES]:
                             # Gets titles from articles
                             article_title = article.find(class_='title').text
                             article_body = article.find(class_='contents').text
@@ -179,7 +181,7 @@ def fetch_data(sites):
     
         data = []
         for site in sites:
-            articles = fetchArticlesForSite("database.db","articles", site["id"])
+            articles = fetchArticlesForSite("database.db","articles", site["id"], HOW_MANY_ARTICLES)
             dict = {
                 "site_name": site["name"],
                 "site_logo": site["logo"],
