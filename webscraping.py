@@ -79,6 +79,7 @@ def fetch_data(sites):
         data = []
         for site in sites:
             articles = fetchArticlesForSite("database.db","articles", site["id"])
+            print(articles)
             dict = {
                 "site_name": site["name"],
                 "site_logo": site["logo"],
@@ -86,9 +87,9 @@ def fetch_data(sites):
                 "site_id" : site["id"],
                 "articles": []
             }
-            print("Created dict for", site["name"])
+           # print("Created dict for", site["name"])
             for article in articles:
-                print("Creating article " + str(article[0]) + " for " + site["name"] + "...")
+                #print("Creating article " + str(article[0]) + " for " + site["name"] + "...")
                 articles = {
                         "article_ID" : article[0],
                         "article_body" : article[2],

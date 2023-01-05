@@ -24,6 +24,7 @@ def initializeDB(db):
         FOREIGN KEY(site_ID) REFERENCES sites(site_ID)
         ) 
         """
+    
     conn.execute(table_sites)
     conn.execute(table_articles)
     print ("Tables created successfully \u2713")
@@ -52,15 +53,15 @@ def fetchAllFromTable(db, table):
 def fetchArticlesForSite(db, table, siteID):
     with sqlite3.connect(db) as con:
         cur = con.cursor()
-        cur.execute(f"SELECT DISTINCT * FROM {table} WHERE site_ID = {siteID} ORDER BY date DESC LIMIT 5")
+        cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID} ORDER BY date DESC LIMIT 5")
         data = cur.fetchall()
         cur.close()
         return data
 
 def insertIntoDB(article_title,article_body,article_link,site_id,connection):
     cursor = connection.cursor()
-    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-    cursor.execute('INSERT INTO articles(article_title,article_body,article_link,site_ID, date) VALUES(?,?,?,?,?)', (article_title,article_body,article_link,site_id, current_date))
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cursor.execute('''INSERT INTO articles(article_title,article_body,article_link,site_ID, date) SELECT ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM articles WHERE article_body = ?)''', (article_title, article_body, article_link, site_id, current_date, article_body))
 
     add_to_csv(article_title, article_body, article_link, site_id)
 
