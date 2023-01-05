@@ -12,9 +12,6 @@ def getArticlesFromSites(sites):
             # If the request was successful (status code 200), process the HTML response
             if r.status_code == 200:
                 soup = bs4.BeautifulSoup(r.text, "html.parser")
-       
-                siteName = site["name"]
-                link = site['link']
 
                 if site["name"] == "FC Barca":    
                     site_id = site["id"]

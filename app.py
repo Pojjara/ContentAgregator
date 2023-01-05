@@ -6,7 +6,7 @@ from ListOfSites import sites
 
 app = Flask(__name__)
 
-initializeDB()
+initializeDB("database.db")
 addSitesToDB(sites)
 getArticlesFromSites(sites)
 

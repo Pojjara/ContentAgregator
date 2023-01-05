@@ -3,8 +3,8 @@ import csv
 import openpyxl
 import logging
 
-def initializeDB():
-    conn = sqlite3.connect('database.db')
+def initializeDB(db):
+    conn = sqlite3.connect(db)
     print("Opened database successfully \u2713") 
     table_sites = """CREATE TABLE IF NOT EXISTS sites (
         site_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,14 +31,54 @@ def initializeDB():
     conn.close()
 
 def addSitesToDB(sites):
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
     for site in sites:
         siteName = site["name"]
         link = site['link']
-        connection = sqlite3.connect("database.db")
-        cursor = connection.cursor()
         cursor.execute('INSERT INTO sites(SiteName, SiteLink) VALUES(?,?)', (siteName,link))
+    connection.commit()
+    connection.close()
+
+def fetchAllFromTable(db, table):
+    with sqlite3.connect(db) as con:
+        cur = con.cursor()
+        cur.execute(f"SELECT * FROM {table}")
+
+        data = cur.fetchall()
+        cur.close()
+        return data
+
+def fetchArticlesForSite(db, table, siteID):
+    with sqlite3.connect(db) as con:
+        cur = con.cursor()
+        cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID}")
+
+        data = cur.fetchall()
+        cur.close()
+        return data
+
+def insertIntoDB(article_title,article_body,article_link,site_id,connection):
+    cursor = connection.cursor()   
+    cursor.execute('INSERT INTO articles(article_title,article_body,article_link,site_ID) VALUES(?,?,?,?)', (article_title,article_body,article_link,site_id))
+    
+    add_to_csv(article_title, article_body, article_link, site_id)
+
+    add_to_excel(article_title, article_body, article_link, site_id)
+
+def openDBconnection(db):
+    try:
+        connection = sqlite3.connect(db)
+        return connection
+    except Exception as e:
+        logging.exception("Error opening Databse connection: {}".format(e))
+
+def commitAndCcloseDBconnection(connection):
+    try:
         connection.commit()
         connection.close()
+    except Exception as e:
+        logging.exception("Error closing Databse connection: {}".format(e))
 
 def add_to_csv(article_title, article_body, article_link, site_id):
     # Read the existing data from the CSV file
@@ -76,45 +116,3 @@ def add_to_excel(article_title, article_body, article_link, site_id):
     if not article_exists:
         sheet.append([article_title, article_body, article_link, site_id])
         wb.save('articles.xlsx')
-
-def insertIntoDB(article_title,article_body,article_link,site_id,connection):
-    cursor = connection.cursor()   
-    cursor.execute('INSERT INTO articles(article_title,article_body,article_link,site_ID) VALUES(?,?,?,?)', (article_title,article_body,article_link,site_id))
-    
-    add_to_csv(article_title, article_body, article_link, site_id)
-
-    add_to_excel(article_title, article_body, article_link, site_id)
-
-def fetchAllFromTable(db, table):
-    with sqlite3.connect(db) as con:
-        cur = con.cursor()
-        cur.execute(f"SELECT * FROM {table}")
-
-        data = cur.fetchall()
-        cur.close()
-        return data
-
-def fetchArticlesForSite(db, table, siteID):
-    with sqlite3.connect(db) as con:
-        cur = con.cursor()
-        cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID}")
-
-        data = cur.fetchall()
-        cur.close()
-        return data
-
-
-
-def openDBconnection(db):
-    try:
-        connection = sqlite3.connect(db)
-        return connection
-    except Exception as e:
-        logging.exception("Error opening Databse connection: {}".format(e))
-
-def commitAndCcloseDBconnection(connection):
-    try:
-        connection.commit()
-        connection.close()
-    except Exception as e:
-        logging.exception("Error closing Databse connection: {}".format(e))
