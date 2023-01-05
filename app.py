@@ -6,8 +6,6 @@ from ListOfSites import sites
 
 app = Flask(__name__)
 
-initializeDB("database.db")
-addSitesToDB(sites)
 getArticlesFromSites(sites)
 
 @app.route("/")

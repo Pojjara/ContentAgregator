@@ -2,6 +2,8 @@ import sqlite3
 import csv
 import openpyxl
 import logging
+import datetime
+
 
 def initializeDB(db):
     conn = sqlite3.connect(db)
@@ -18,12 +20,10 @@ def initializeDB(db):
         article_body TEXT,
         article_link TEXT,
         article_title TEXT,
+        date DATETIME,
         FOREIGN KEY(site_ID) REFERENCES sites(site_ID)
         ) 
         """
-    conn.execute('DROP TABLE IF EXISTS sites')
-    conn.execute('DROP TABLE IF EXISTS articles')
-    print ("Table deleted successfully \u2713")
     conn.execute(table_sites)
     conn.execute(table_articles)
     print ("Tables created successfully \u2713")
@@ -52,16 +52,16 @@ def fetchAllFromTable(db, table):
 def fetchArticlesForSite(db, table, siteID):
     with sqlite3.connect(db) as con:
         cur = con.cursor()
-        cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID}")
-
+        cur.execute(f"SELECT DISTINCT * FROM {table} WHERE site_ID = {siteID} ORDER BY date DESC LIMIT 5")
         data = cur.fetchall()
         cur.close()
         return data
 
 def insertIntoDB(article_title,article_body,article_link,site_id,connection):
-    cursor = connection.cursor()   
-    cursor.execute('INSERT INTO articles(article_title,article_body,article_link,site_ID) VALUES(?,?,?,?)', (article_title,article_body,article_link,site_id))
-    
+    cursor = connection.cursor()
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
+    cursor.execute('INSERT INTO articles(article_title,article_body,article_link,site_ID, date) VALUES(?,?,?,?,?)', (article_title,article_body,article_link,site_id, current_date))
+
     add_to_csv(article_title, article_body, article_link, site_id)
 
     add_to_excel(article_title, article_body, article_link, site_id)

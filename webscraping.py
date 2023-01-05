@@ -67,7 +67,8 @@ def getArticlesFromSites(sites):
                     except Exception as e:
                         logging.exception("Error processing Dziennik Naukowy articles: {}".format(e))
                         continue
-            
+                        
+                print(f"Succesfully scraped data from {site['name']} \u2713")
             else:
                 print(f"Error {r.status_code} while fetching articles from {site['name']}")
         except requests.RequestException as e:
