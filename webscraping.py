@@ -76,14 +76,14 @@ def scrape_articles(site):
             elif site['name'] == "Dziennik Naukowy":
                     try:
                         # Find the articles
-                        articles_list = soup.find_all("div", class_="article-list")
+                        articles_list = soup.find_all("a", class_="color-black")
                         articles = []
                         for article in articles_list[:HOW_MANY_ARTICLES]:
                             # Gets titles from articles
-                            article_title = article.find(class_='title').text
-                            article_body = article.find(class_='contents').text
+                            article_title = article.parent.find(class_='title').text
+                            article_body = article.parent.find(class_='contents').text
                             # Gets links from articles
-                            article_link = article.find(class_='read-more')['href']
+                            article_link = article.parent.find(class_='read-more')['href']
                             articles.append({
                                     'title': article_title,
                                     'body': article_body[40:-141],
