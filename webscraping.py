@@ -17,22 +17,32 @@ def scrape_articles(site):
             # (Code will vary depending on the site being scraped)
             if site["name"] == "FC Barca":    
                     try:
-                        articles_list = soup.select('.news__list')[0]
+                        # Finds all articles
+                        #articles_lists = soup.select('.news__list')[0]
+                        articles_list = soup.find_all('article')
                         articles = []
-                        for i in range(HOW_MANY_ARTICLES):
-                            # Finds all articles
-                            article = articles_list.find_all(class_='article')[i] 
-                            # Gets titles from articles
-                            article_title = article.select('h3.article__meta__title')[0].text 
-                            article_body = article.select('div.article__meta__content')[0].text
-                            # Gets links from articles
-                            article_link = site['link'] + article.find('a')['href'] 
+                        for article in articles_list[:HOW_MANY_ARTICLES]:
+                            
+                            try:
+                                # Gets titles from articles
+                                article_title = article.find('h3').text 
+                                article_body = article.find('p').text
+                                # Gets links from articles
+                                article_link = site['link'] + article.find('a')['href']
+                            except AttributeError:   
+                                try:
+                                    article_title = article.find('h2').text
+                                    article_body = ''
+                                    article_link = site['link'] + article.find('a')['href']
+                                except:
+                                    continue
                             articles.append({
                                 'title': article_title,
                                 'body': article_body,
                                 'link': article_link
                             })         
                     except Exception as e:
+                        print(article)
                         logging.exception("Error processing FC Barca articles: {}".format(e))
 
             elif site['name'] == "BBC":
@@ -45,7 +55,10 @@ def scrape_articles(site):
                             try:
                                 # Gets titles from articles
                                 article_title = article.find('h3').text
-                                article_body = article.find('p').text
+                                try:
+                                    article_body = article.find('p').text
+                                except:
+                                    article_body = ''
                                 # Gets links from articles
                                 article_link = 'https://bbc.co.uk' + article.find('a')['href']
                                 articles.append({
@@ -53,7 +66,7 @@ def scrape_articles(site):
                                     'body': article_body,
                                     'link': article_link
                                     })
-                            except:
+                            except Exception as e:
                                 xOfArticles =+1
                                 continue
                     except Exception as e:
@@ -107,7 +120,7 @@ def getArticlesFromSites(sites):
         articles = scrape_articles(site)
         print(f"Succesfully scraped data from {site['name']} \u2713")
         insert_articles(articles, site['id'])
-        remove_old_articles("database.db", site['id'], 15)
+        #remove_old_articles("database.db", site['id'], 15)
     if xARTICLES > 0:
         print(xARTICLES, " Article Added !")
 
