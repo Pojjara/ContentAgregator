@@ -3,6 +3,7 @@ import requests, bs4
 import sqlite3
 from webscraping import *
 from ListOfSites import sites
+import time
 
 app = Flask(__name__)
 #("database.db")

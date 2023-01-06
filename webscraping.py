@@ -106,6 +106,7 @@ def getArticlesFromSites(sites):
         articles = scrape_articles(site)
         print(f"Succesfully scraped data from {site['name']} \u2713")
         insert_articles(articles, site['id'])
+        remove_old_articles("database.db", site['id'], 15)
     if xARTICLES > 0:
         print(xARTICLES, " Article Added !")
 
@@ -185,7 +186,7 @@ def fetch_data(sites):
         
         data = []
         for site in sites:
-            remove_old_articles("database.db", site['id'])
+            
             articles = fetchArticlesForSite("database.db","articles", site["id"], HOW_MANY_ARTICLES)
             dict = {
                 "site_name": site["name"],
