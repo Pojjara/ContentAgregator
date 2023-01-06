@@ -1,3 +1,5 @@
+#databaseCode.py
+
 import sqlite3
 import csv
 import openpyxl
@@ -84,7 +86,6 @@ def remove_old_articles(db, site_id,numOfArticlesToDelete):
         # Get the number of articles for the given site
         cur.execute(f'SELECT COUNT(*) FROM articles WHERE site_id = {site_id}')
         num_articles = cur.fetchone()[0]
-        print(f'{num_articles} id:{site_id}')
         # If there are more than 15 articles, delete the oldest ones
         if num_articles > numOfArticlesToDelete:
             num_to_delete = num_articles - numOfArticlesToDelete
