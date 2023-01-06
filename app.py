@@ -4,6 +4,14 @@ import sqlite3
 from webscraping import *
 from ListOfSites import sites
 import time
+from apscheduler.schedulers.background import BackgroundScheduler
+
+scheduler = BackgroundScheduler()
+def update_data():
+    data = fetch_data(sites)
+scheduler.add_job(update_data, 'interval', minutes=10)
+
+
 
 app = Flask(__name__)
 #("database.db")
@@ -13,16 +21,13 @@ getArticlesFromSites(sites)
 @app.route("/")
 def index():
 
-    data = fetch_data(sites)
+    
     return render_template("index.html", data=data)
 
-@app.route("/test")
-def test():
-    r = requests.get('https://www.fcbarca.com/')
-    print(r.status_code)
-    soup = bs4.BeautifulSoup(r.text, "html.parser")
-    soup.title
-    return r.json()
+if __name__ == '__main__':
+    scheduler.start()
+    data = fetch_data(sites)
+    app.run()
 
 
 
