@@ -10,5 +10,9 @@ sites = [
     {"name": "Dziennik Naukowy",
     "logo" : "https://dzienniknaukowy.pl/themes/flatly/img/logo.png",
     "link": "https://dzienniknaukowy.pl/aktualnosci/artykuly?orderBy=publication_date&sortOrder=desc",
-    "id" : 3}
+    "id" : 3},
+    {'name': "Alltop",
+    'logo': 'http://www.alltop.com/viral/wp-content/uploads/2016/09/box.png',
+    'link': 'https://alltop.com/viral/',
+    'id': 4}
 ]

@@ -57,6 +57,11 @@ body {
     font-size: 14px;
 }
 
+.article-list {
+    height: 300px;
+    overflow-y: auto;
+}
+
 .article-item {
     display: flex;
     align-items: center;
