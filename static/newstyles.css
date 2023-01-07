@@ -69,7 +69,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    height: 50px;
+    height: auto;
     /* set a fixed height for the article items */
     overflow: hidden;
     /* add overflow: hidden to hide any content that overflows the fixed height */
@@ -81,13 +81,14 @@ body {
 
 .article-text {
     flex: 1;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 16px;
     /* increase the font size for the article titles */
     text-decoration: none;
     /* remove the text-decoration for the article titles */
+    transition: 0.3s;
 }
 
 
