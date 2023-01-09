@@ -1,13 +1,34 @@
-{% extends "layout.html" %} {% block title %} Price Check {% endblock %} {% block main %}
-<div class="asd">
+{% extends "layout.html" %} {% block title %} Price Check {% endblock %} {% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">My Website</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Content Agregator</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/pricechecker">Prices</a>
+            </li>
+        </ul>
+    </div>
+</nav> {% endblock %} {% block main %}
+<div class="amazonPrices">
     <div class="container">
         <div class="row">
             {% for item in prices %}
-            <div class="col-sm-4">
-                <div class="amazon-item">
-                    <img src="{{item.picture}}" alt="{{item.title}}" href="{{item.link}}">
+            <div class="col-sm-3">
+                <div class="amazon-item bg-dark">
+                    <div class="amazon-image">
+                        <img src="{{item.picture}}" alt="{{item.title}}" href="{{item.link}}">
+                    </div>
                     <h2><a href="{{item.link}}">{{item.title}}</a></h2>
-                    {% if item.targetPrice
+                    <hr> {% if item.targetPrice
                     < item.price %} <p class="normalPrice">Price: £{{item.price}}</p>
                         {% else %}
                         <p class="superPrice">Price: £{{item.price}}</p> {% endif %}

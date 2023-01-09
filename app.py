@@ -9,10 +9,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 # Function to update the data
 def update_data():
+
     print("Updating data...")
     getArticlesFromSites(sites)
     global data
     data = fetch_data(sites)
+    global prices
+    prices = getPrices(products)
 
 # Create a BackgroundScheduler to update the data every 10 minutes
 scheduler = BackgroundScheduler()
@@ -20,9 +23,10 @@ scheduler.add_job(update_data, 'interval', minutes=10)
 
 # Create the Flask app
 app = Flask(__name__)
-
+# Set the secret key
+app.secret_key = 'sadhah2h31h'
 # Gather the data from the sites
-#getArticlesFromSites(sites)
+getArticlesFromSites(sites)
 prices = getPrices(products)
 
 data = fetch_data(sites)
@@ -37,7 +41,7 @@ def index():
 
 @app.route("/pricechecker")
 def priceChecker():
-
+    
     return render_template("pricecheck.html", prices=prices)
 
 # Start the scheduler

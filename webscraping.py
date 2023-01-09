@@ -14,11 +14,9 @@ def scrape_articles(site):
         if r.status_code == 200:
             soup = bs4.BeautifulSoup(r.text, 'html.parser')
             # Extract the articles from the HTML response
-            # (Code will vary depending on the site being scraped)
             if site["name"] == "FC Barca":    
                     try:
                         # Finds all articles
-                        #articles_lists = soup.select('.news__list')[0]
                         articles_list = soup.find_all('article')
                         articles = []
                         for article in articles_list[:HOW_MANY_ARTICLES]:
