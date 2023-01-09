@@ -1,0 +1,20 @@
+{% extends "layout.html" %} {% block title %} Price Check {% endblock %} {% block main %}
+<div class="asd">
+    <div class="container">
+        <div class="row">
+            {% for item in prices %}
+            <div class="col-sm-4">
+                <div class="amazon-item">
+                    <img src="{{item.picture}}" alt="{{item.title}}" href="{{item.link}}">
+                    <h2><a href="{{item.link}}">{{item.title}}</a></h2>
+                    {% if item.targetPrice
+                    < item.price %} <p class="normalPrice">Price: £{{item.price}}</p>
+                        {% else %}
+                        <p class="superPrice">Price: £{{item.price}}</p> {% endif %}
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div> {% endblock %}

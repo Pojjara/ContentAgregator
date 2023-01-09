@@ -2,7 +2,8 @@ from flask import Flask, render_template, redirect, request, session, g
 import requests, bs4
 import sqlite3
 from webscraping import *
-from ListOfSites import sites
+from ListOfSites import sites, products
+from priceChecking import *
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -21,7 +22,8 @@ scheduler.add_job(update_data, 'interval', minutes=10)
 app = Flask(__name__)
 
 # Gather the data from the sites
-getArticlesFromSites(sites)
+#getArticlesFromSites(sites)
+prices = getPrices(products)
 
 data = fetch_data(sites)
 
@@ -32,6 +34,11 @@ def index():
     
     # Render the index template and pass the data to it
     return render_template("index.html", data=data)
+
+@app.route("/pricechecker")
+def priceChecker():
+
+    return render_template("pricecheck.html", prices=prices)
 
 # Start the scheduler
 if __name__ == '__main__':

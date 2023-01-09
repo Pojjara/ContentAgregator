@@ -48,7 +48,7 @@ body {
 
 .card-title {
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -126,3 +126,47 @@ body {
     object-fit: cover;
     /* add object-fit: cover to stretch the image to fit the size of the logo element */
 }
+
+
+/* Amazon prices */
+
+.amazon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    margin: 10px;
+    color: white;
+    background-color: #141414;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.amazon-item img {
+    width: 100%;
+}
+
+.amazon-item h2 {
+    margin: 10px 0;
+}
+
+.amazon-item h2 a {
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+}
+
+.amazon-item p.superPrice {
+    font-weight: bold;
+    font-size: xx-large;
+    color: #0cb529;
+}
+
+.amazon-item p.normalPrice {
+    font-weight: bold;
+    font-size: xx-large;
+    color: #e9e9e7;
+}
+
+
+/*   */
