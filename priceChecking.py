@@ -14,6 +14,10 @@ def getPrices(products):
         soup = BeautifulSoup(page.text, "html.parser")
         try:
             # Find the price on the page
+            prices = soup.find_all("div", id="corePrice_feature_div")
+            for price in prices:
+
+                print(price.find(class_="a-price-whole").text)
             title = soup.find(id='productTitle').text
             price = soup.find(class_="a-price-whole").text
             picture = soup.find(id="main-image-container").find('img')['src']
@@ -29,7 +33,7 @@ def getPrices(products):
                 'link': product['link'],
                 'picture': picture            
             })
-            print(f"Succesfully gathered data for {title}")
+            print(f"Succesfully gathered data for: {title}")
         except:
             print(product)
     return data

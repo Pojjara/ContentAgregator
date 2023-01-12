@@ -7,9 +7,6 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/">Content Agregator</a>
             </li>
             <li class="nav-item active">
@@ -27,7 +24,7 @@
                     <div class="amazon-image">
                         <img src="{{item.picture}}" alt="{{item.title}}" href="{{item.link}}">
                     </div>
-                    <h2><a href="{{item.link}}">{{item.title}}</a></h2>
+                    <h2><a target_="blank" href="{{item.link}}">{{item.title}}</a></h2>
                     <hr> {% if item.targetPrice
                     < item.price %} <p class="normalPrice">Price: £{{item.price}}</p>
                         {% else %}

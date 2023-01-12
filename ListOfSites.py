@@ -20,7 +20,7 @@ sites = [
 
 products = [
     {"link" : "https://www.amazon.co.uk/echo-show-8-2nd-generation-2021-release/dp/B084TNK1NL",
-    "targetPrice" : 90},
+    "targetPrice" : 95},
     {"link": "https://www.amazon.co.uk/dp/B08XVVPXX4/ref=gw_uk_desk_mso_smp_mnp_bau_xpl2?pf_rd_r=Z1XX77VZMN0T59Z0BTZY&pf_rd_p=a35bd811-4132-4cf5-bb8a-fe3ee3b14d13&pd_rd_r=0bbac26c-1c1d-4587-9ea5-39c73e991a89&pd_rd_w=Njko7&pd_rd_wg=NNEqc&ref_=pd_gw_unk",
     "targetPrice": 30},
     {"link": "https://www.amazon.co.uk/Apple-Airpods-Charging-latest-Model/dp/B07PZR3PVB/ref=sr_1_1_sspa?crid=KGRGP5OPEANZ&keywords=airpods&qid=1673293834&sprefix=airpods%2Caps%2C77&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
