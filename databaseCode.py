@@ -66,6 +66,11 @@ def insertIntoDB(article_title,article_body,article_link,site_id,connection):
     current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute('''INSERT INTO articles(article_title,article_body,article_link,site_ID, date) SELECT ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM articles WHERE article_link = ?)''', (article_title, article_body, article_link, site_id, current_date, article_link))
 
+    if cursor.rowcount > 0:
+        return True
+    else:
+        return False
+
 def openDBconnection(db):
     try:
         connection = sqlite3.connect(db)

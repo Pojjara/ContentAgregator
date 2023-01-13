@@ -5,6 +5,7 @@ import logging
 
 HOW_MANY_ARTICLES = 100
 xARTICLES = 0
+xNotAdded = 0
 
 def scrape_articles(site):
     try:
@@ -119,11 +120,21 @@ def insert_articles(articles, site_id):
     connection = openDBconnection('database.db')
     try:
         for article in articles:
-            xARTICLES =+ 1
+            
+            
             article_title = article['title']
             article_body = article['body']
             article_link = article['link']
-            insertIntoDB(article_title, article_body, article_link, site_id, connection)
+            Added = insertIntoDB(article_title, article_body, article_link, site_id, connection)
+            if(Added == True) :
+                global xARTICLES
+                
+                xARTICLES += 1
+                
+            else:
+                global xNotAdded
+                xNotAdded += 1
+
     except Exception as e:
         logging.exception(f'Error inserting articles into database: {e}')
     finally:
@@ -137,8 +148,8 @@ def getArticlesFromSites(sites):
         remove_old_articles("database.db", site['id'], 25)
         insert_articles(articles, site['id'])
         
-    if xARTICLES > 0:
-        print(xARTICLES, " Article Added !")
+    print(xARTICLES, " Article Added !")
+    print(xNotAdded, " Article(s) already existed in database.")
 
 def fetch_data(sites):
         
