@@ -7,6 +7,17 @@ from priceChecking import *
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 
+# Handle any errors that might occur during the scraping process. 
+# Handle any errors that might occur during the insertion of the scraped data into the database.
+# Handle any errors that might occur during the connection to the database.
+# Handle any errors that might occur during the closing of the database connection.
+# Handle any errors that might occur during the fetching of data from the database.
+# Handle any errors that might occur during the updating of data.
+# Handle any errors that might occur during the starting of the scheduler.
+# Handle any errors that might occur during the running of the application.
+# Use a variable or parameter instead of hardcoding HOW_MANY_ARTICLES 
+
+
 # Function to update the data
 def update_data():
 

@@ -3,7 +3,7 @@ import requests, bs4
 from databaseCode import *
 import logging
 
-HOW_MANY_ARTICLES = 100
+HOW_MANY_ARTICLES = 20
 xARTICLES = 0
 xNotAdded = 0
 
@@ -142,14 +142,24 @@ def insert_articles(articles, site_id):
 
 
 def getArticlesFromSites(sites):
+    deletedArticles = 0
     for site in sites:
         articles = scrape_articles(site)
         print(f"Succesfully scraped data from {site['name']} \u2713")
-        remove_old_articles("database.db", site['id'], 25)
+        deleting = remove_old_articles("database.db", site['id'], HOW_MANY_ARTICLES)
         insert_articles(articles, site['id'])
         
+        try:
+            deletedArticles += deleting
+        except:
+            deletedArticles += 0
+             
+    
+    print(deletedArticles, " Articles were deleted")
     print(xARTICLES, " Article Added !")
     print(xNotAdded, " Article(s) already existed in database.")
+    
+
 
 def fetch_data(sites):
         

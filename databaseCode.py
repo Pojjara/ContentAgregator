@@ -34,8 +34,8 @@ def initializeDB(db):
 
     conn.close()
 
-def addSitesToDB(sites):
-    connection = sqlite3.connect("database.db")
+def addSitesToDB(sites,db):
+    connection = sqlite3.connect(db)
     cursor = connection.cursor()
     for site in sites:
         siteName = site["name"]
@@ -58,8 +58,8 @@ def fetchArticlesForSite(db, table, siteID, HOW_MANY_ARTICLES):
         cur = con.cursor()
         cur.execute(f"SELECT * FROM {table} WHERE site_ID = {siteID} ORDER BY date DESC LIMIT {HOW_MANY_ARTICLES}")
         data = cur.fetchall()
-        cur.close()
-        return data
+    cur.close()
+    return data
 
 def insertIntoDB(article_title,article_body,article_link,site_id,connection):
     cursor = connection.cursor()
@@ -85,15 +85,17 @@ def commitAndCloseDBconnection(connection):
     except Exception as e:
         logging.exception("Error closing Databse connection: {}".format(e))
 
-def remove_old_articles(db, site_id,numOfArticlesToDelete):
+def remove_old_articles(db, site_id,maxAmountOfArticles):
     with sqlite3.connect(db) as con:
         cur = con.cursor()
         # Get the number of articles for the given site
         cur.execute(f'SELECT COUNT(*) FROM articles WHERE site_id = {site_id}')
         num_articles = cur.fetchone()[0]
+        print(num_articles, f" Articles found in db for site_id - {site_id}!")
         # If there are more than 15 articles, delete the oldest ones
-        if num_articles > numOfArticlesToDelete:
-            num_to_delete = num_articles - numOfArticlesToDelete
-            #cur.execute(f'DELETE FROM articles WHERE site_id = {site_id} ORDER BY date ASC LIMIT {num_to_delete}')
+        if num_articles > maxAmountOfArticles:
+            num_to_delete = num_articles - maxAmountOfArticles
 
             cur.execute(f'DELETE FROM articles WHERE site_id = {site_id} AND date IN (SELECT date from articles WHERE site_id = {site_id} ORDER BY date ASC LIMIT {num_to_delete})')
+
+            return cur.rowcount

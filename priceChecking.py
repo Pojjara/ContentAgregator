@@ -13,28 +13,25 @@ def getPrices(products):
         page = requests.get(product['link'],headers=HEADERS)
         soup = BeautifulSoup(page.text, "html.parser")
         try:
-            # Find the price on the page
-            prices = soup.find_all("div", id="corePrice_feature_div")
-            for price in prices:
 
-                print(price.find(class_="a-price-whole").text)
             title = soup.find(id='productTitle').text
             price = soup.find(class_="a-price-whole").text
             picture = soup.find(id="main-image-container").find('img')['src']
+            try:
+                data.append({
+                    'title': title,
+                    'price': int(price[:-1]),
+                    'targetPrice' : product['targetPrice'],
+                    'link': product['link'],
+                    'picture': picture            
+                })
+                print(f"Succesfully gathered data for: {title}")
+            except:
+                print(product)
         except Exception as e:
             print(product)
             print(e)
 
-        try:
-            data.append({
-                'title': title,
-                'price': int(price[:-1]),
-                'targetPrice' : product['targetPrice'],
-                'link': product['link'],
-                'picture': picture            
-            })
-            print(f"Succesfully gathered data for: {title}")
-        except:
-            print(product)
+       
     return data
 
