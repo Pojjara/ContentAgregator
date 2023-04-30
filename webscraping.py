@@ -3,8 +3,9 @@ import requests, bs4
 from databaseCode import *
 import logging
 
-HOW_MANY_ARTICLES = 100
+HOW_MANY_ARTICLES = 20
 xARTICLES = 0
+xNotAdded = 0
 
 def scrape_articles(site):
     try:
@@ -14,11 +15,9 @@ def scrape_articles(site):
         if r.status_code == 200:
             soup = bs4.BeautifulSoup(r.text, 'html.parser')
             # Extract the articles from the HTML response
-            # (Code will vary depending on the site being scraped)
             if site["name"] == "FC Barca":    
                     try:
                         # Finds all articles
-                        #articles_lists = soup.select('.news__list')[0]
                         articles_list = soup.find_all('article')
                         articles = []
                         for article in articles_list[:HOW_MANY_ARTICLES]:
@@ -121,11 +120,21 @@ def insert_articles(articles, site_id):
     connection = openDBconnection('database.db')
     try:
         for article in articles:
-            xARTICLES =+ 1
+            
+            
             article_title = article['title']
             article_body = article['body']
             article_link = article['link']
-            insertIntoDB(article_title, article_body, article_link, site_id, connection)
+            Added = insertIntoDB(article_title, article_body, article_link, site_id, connection)
+            if(Added == True) :
+                global xARTICLES
+                
+                xARTICLES += 1
+                
+            else:
+                global xNotAdded
+                xNotAdded += 1
+
     except Exception as e:
         logging.exception(f'Error inserting articles into database: {e}')
     finally:
@@ -133,13 +142,24 @@ def insert_articles(articles, site_id):
 
 
 def getArticlesFromSites(sites):
+    deletedArticles = 0
     for site in sites:
         articles = scrape_articles(site)
         print(f"Succesfully scraped data from {site['name']} \u2713")
+        deleting = remove_old_articles("database.db", site['id'], HOW_MANY_ARTICLES)
         insert_articles(articles, site['id'])
-        remove_old_articles("database.db", site['id'], 15)
-    if xARTICLES > 0:
-        print(xARTICLES, " Article Added !")
+        
+        try:
+            deletedArticles += deleting
+        except:
+            deletedArticles += 0
+             
+    
+    print(deletedArticles, " Articles were deleted")
+    print(xARTICLES, " Article Added !")
+    print(xNotAdded, " Article(s) already existed in database.")
+    
+
 
 def fetch_data(sites):
         
