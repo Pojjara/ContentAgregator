@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-from ListOfSites import products
+from databaseCode import get_products
 
-def getPrices(products):
+def getPrices():
+    products = get_products()
     data = []
     
     for product in products:

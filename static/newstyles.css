@@ -203,3 +203,33 @@ body {
 
 
 /*   */
+
+.comment-section {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.comment-section #comment {
+    background-color: #212529!important
+}
+
+.plus_item {
+    justify-content: center;
+}
+
+div.amazon-item p.plus_sign {
+    font-size: 300px;
+    font-weight: lighter;
+    color: #767f8d;
+    transition: 0.3s;
+    display: none;
+}
+
+div.amazon-item p.plus_sign:hover {
+    color: #8e99aa;
+}
+
+.form {
+    display: flex;
+}

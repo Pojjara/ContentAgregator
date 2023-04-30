@@ -33,6 +33,20 @@
             </div>
 
             {% endfor %}
+            <div class="col-sm-3">
+                <div class="amazon-item plus_item">
+                    <p class="plus_sign">+</p>
+                    <section class="form">
+                        <div class="adding_new_page">
+                            <form action="/addNewAmazonItem"  method="post">
+                                <input type="text" id="link" name="link" value="" placeholder="Link to amazon item"><br>
+                                <input type="text" id="price" name="price" value="" placeholder="Target price"><br><br>
+                                <input type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div> {% endblock %}
