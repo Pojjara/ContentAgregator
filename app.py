@@ -89,6 +89,10 @@ def addNewAmazonItem():
         prices = getPrices()
         return render_template("pricecheck.html", prices=prices)
 
+@app.errorhandler(404)
+def errorhandling(error):
+    return "This page doesn't exist!", 404
+
 # Start the scheduler
 if __name__ == '__main__':
     scheduler.start()
