@@ -39,6 +39,8 @@ app = Flask(__name__)
 # Set the secret key
 app.secret_key = 'sadhah2h31h'
 
+#app.use("/static", Flask.static('./static/'));
+
 # Gather the data from the sites
 getArticlesFromSites(sites)
 data = fetch_data(sites)
@@ -73,7 +75,7 @@ def priceChecker():
     prices = getPrices()
     return render_template("pricecheck.html", prices=prices)
 
-@app.route("/addNewAmazonItem", methods=["POST",'GET'])
+@app.route("/addNewAmazonItem", methods=["POST"])
 def addNewAmazonItem():
     
     if request.method == 'POST':
@@ -81,13 +83,18 @@ def addNewAmazonItem():
         price = int(request.form.get("price"))
 
         insert_product_to_db(link,price)
-        prices = getPrices()
-        return render_template("pricecheck.html", prices=prices)
 
-    # Get data for prices check
-    else:
-        prices = getPrices()
-        return render_template("pricecheck.html", prices=prices)
+        return redirect("/pricechecker")
+
+    
+@app.route("/removeitem" , methods=["POST"])
+def removeitem():
+    
+    itemToDelete = str(request.form.get("link"))
+    print(itemToDelete)
+    remove_product_from_db(itemToDelete)
+    
+    return redirect("/pricechecker")
 
 @app.errorhandler(404)
 def errorhandling(error):

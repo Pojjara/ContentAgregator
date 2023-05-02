@@ -21,6 +21,12 @@
             {% for item in prices %}
             <div class="col-sm-3">
                 <div class="amazon-item bg-dark">
+                    <div class="removingItem">
+                        <form action="/removeitem" method="post">
+                            <input class="form-control" value="{{ item.link }}" name="link" hidden type="text">
+                            <button class='removeX' id="{{ item.link }}" type="submit">X</button>
+                        </form>
+                    </div>
                     <div class="amazon-image">
                         <img src="{{item.picture}}" alt="{{item.title}}" href="{{item.link}}">
                     </div>

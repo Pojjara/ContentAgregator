@@ -169,6 +169,19 @@ def insert_product_to_db(link,price):
     except Exception as e:
         logging.exception("Error commiting Amazon item into DB: {}".format(e))
 
+def remove_product_from_db(link):
+    connection = openDBconnection('database.db')
+    cursor = connection.cursor()
+    try:
+        cursor.execute('DELETE FROM products WHERE product = ?', [link])
+    except Exception as e:
+        logging.exception("Error removing Amazon item from Database: {}".format(e))
+
+    try:
+         commitAndCloseDBconnection(connection)
+    except Exception as e:
+        logging.exception("Error commiting Amazon item into DB: {}".format(e))
+
 def get_comments():
     with sqlite3.connect('database.db') as con:
         cur = con.cursor()
