@@ -72,7 +72,6 @@ def index():
 
 @app.route("/pricechecker", methods=['GET', "POST"])
 def priceChecker():
-    prices = getPrices()
     return render_template("pricecheck.html", prices=prices)
 
 @app.route("/addNewAmazonItem", methods=["POST"])
@@ -80,9 +79,16 @@ def addNewAmazonItem():
     
     if request.method == 'POST':
         link = request.form.get("link")
-        price = int(request.form.get("price"))
+        targetprice = int(request.form.get("price"))
 
-        insert_product_to_db(link,price)
+        insert_product_to_db(link,targetprice)
+
+        #DODAJ TUTAJ MOZLIWOSC DODAWANIA NOWEGO PRODUKTU BEZ SPRAWDZANIA CEN W RESZCIE, FUNKCJA GETDATA W PRICECHECKING.PY
+        new_product = {'product_ID': 0, 'link': link, 'targetPrice': targetprice}
+        print('new_product: ', new_product)
+        amazonDataNewProduct = get_info_about_new_product(link,targetprice)
+        print('amazonDataNewProd: ', amazonDataNewProduct)
+        prices.append(amazonDataNewProduct)
 
         return redirect("/pricechecker")
 
@@ -93,6 +99,10 @@ def removeitem():
     itemToDelete = str(request.form.get("link"))
     print(itemToDelete)
     remove_product_from_db(itemToDelete)
+
+    for i in range(len(prices)):
+        if prices[i]["link"] == itemToDelete:
+            del prices[i]
     
     return redirect("/pricechecker")
 
