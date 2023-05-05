@@ -146,17 +146,20 @@ body {
 .amazon-item {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
     width: 300px;
     height: 700px;
     margin: 10px;
     color: white;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
     padding: 10px;
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
     position: relative;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    /* z-index: 1; */
+    justify-content: space-between;
+    align-items: center;
 }
 
 .amazon-item img {
@@ -165,11 +168,21 @@ body {
 
 .amazon-item h2 {
     margin: 10px 0;
+    /* text-overflow: ellipsis; */
+    /* overflow: hidden; */
+}
+
+.amazon-item-title{
+    max-height: 300px;
+    text-overflow: ellipsis;
 }
 
 .amazon-item h2 a {
     margin: 10px 0;
     color: #767f8d;
+    /* white-space: normal; */
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-decoration: none;
 }
 
@@ -193,6 +206,7 @@ body {
 .amazon-item .amazon-image {
     height: 280px;
     overflow: hidden;
+    z-index: auto;
 }
 
 .amazon-item .amazon-image img {
@@ -232,4 +246,27 @@ div.amazon-item p.plus_sign:hover {
 
 .form {
     display: flex;
+}
+.removingItem {
+    display: none;
+    z-index: 2;
+}
+
+div.amazon-item:hover .removingItem {
+    display: flex;
+}
+.removeX {
+    box-sizing:border-box;
+    justify-content: flex-end;
+    width:20px;
+    height:20px;
+    /* border-width:3px; */
+    /* border-style: solid; */
+    /* border-color:red; */
+    border-radius:100%;
+    /* display: none; */
+    background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%,  white 56%,transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, white 46%,  white 56%,transparent 56%, transparent 100%);
+    background-color: #605353;
+    box-shadow:0px 0px 5px 2px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
 }

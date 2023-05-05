@@ -46,6 +46,7 @@ getArticlesFromSites(sites)
 data = fetch_data(sites)
 
 # Get data for prices check
+global prices
 prices = getPrices()
 # Index route
 @app.route("/",methods=["GET", "POST"])
@@ -83,12 +84,13 @@ def addNewAmazonItem():
 
         insert_product_to_db(link,targetprice)
 
-        #DODAJ TUTAJ MOZLIWOSC DODAWANIA NOWEGO PRODUKTU BEZ SPRAWDZANIA CEN W RESZCIE, FUNKCJA GETDATA W PRICECHECKING.PY
-        new_product = {'product_ID': 0, 'link': link, 'targetPrice': targetprice}
-        print('new_product: ', new_product)
+        #Nie dziala poprawnie V
+
         amazonDataNewProduct = get_info_about_new_product(link,targetprice)
-        print('amazonDataNewProd: ', amazonDataNewProduct)
         prices.append(amazonDataNewProduct)
+
+        ##Nie dziala poprawnie ^
+        print('New Amazon product added!')
 
         return redirect("/pricechecker")
 
@@ -97,13 +99,26 @@ def addNewAmazonItem():
 def removeitem():
     
     itemToDelete = str(request.form.get("link"))
-    print(itemToDelete)
     remove_product_from_db(itemToDelete)
 
-    for i in range(len(prices)):
-        if prices[i]["link"] == itemToDelete:
-            del prices[i]
-    
+
+# Create a new list to store the dictionaries that don't match the link to delete
+    new_prices = []
+    global prices
+# Iterate through each dictionary in the prices list
+    for price in prices:
+        # If the link of the current dictionary matches the link to delete, skip it
+        if price["link"] == itemToDelete:
+            continue
+        # Otherwise, add the dictionary to the new list
+        new_prices.append(price)
+
+# Replace the original prices list with the new list that doesn't contain the deleted item
+    prices = new_prices
+
+
+    ##Nie dziala poprawnie ^
+    print('Item Deleted!')
     return redirect("/pricechecker")
 
 @app.errorhandler(404)

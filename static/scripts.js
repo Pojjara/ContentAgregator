@@ -16,3 +16,20 @@ plusSigns.forEach(plusSign => {
         form.style.display = 'block';
     });
 });
+
+function validateForm() {
+    let link = document.forms["AddingAmazonItem"]["link"].value;
+    let price = document.form['AddingAmazonItem']['price'].value;
+    if (link == "" && price == '') {
+        alert("Link and Price must be filled out");
+        return false;
+      }
+    if (link == "") {
+      alert("Link must be filled out");
+      return false;
+    }
+    if (price == "") {
+        alert("Link must be filled out");
+        return false;
+      }
+  }
