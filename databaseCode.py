@@ -157,7 +157,7 @@ def insert_product_to_db(link,price):
 
     try:
         cursor.execute('''INSERT INTO products(product, targetPrice) VALUES(?,?)''', (link, price))
-        print(f"Added new Amazon item")
+        print(f"Added new Amazon item to db")
 
         
     except Exception as e:

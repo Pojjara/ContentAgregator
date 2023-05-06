@@ -180,10 +180,10 @@ body {
 .amazon-item h2 a {
     margin: 10px 0;
     color: #767f8d;
-    /* white-space: normal; */
     overflow: hidden;
     text-overflow: ellipsis;
     text-decoration: none;
+    font-size: 20px;
 }
 
 .amazon-item:hover a {
@@ -248,25 +248,29 @@ div.amazon-item p.plus_sign:hover {
     display: flex;
 }
 .removingItem {
+    float: right;
     display: none;
-    z-index: 2;
+    
 }
 
 div.amazon-item:hover .removingItem {
-    display: flex;
+    display: block;
+    position: absolute;
+    z-index: 5;
+    transition: all 3s ease;
+    
 }
 .removeX {
-    box-sizing:border-box;
-    justify-content: flex-end;
+    /* box-sizing:border-box; */
+    /* justify-content: flex-end; */
     width:20px;
     height:20px;
-    /* border-width:3px; */
+    /* border-width: 0px; */
     /* border-style: solid; */
     /* border-color:red; */
     border-radius:100%;
     /* display: none; */
     background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%,  white 56%,transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, white 46%,  white 56%,transparent 56%, transparent 100%);
-    background-color: #605353;
-    box-shadow:0px 0px 5px 2px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
+    /* background-color: #40393980; */
+    box-shadow: 0px 0px 8px 2px rgb(255 255 255 / 50%);
 }

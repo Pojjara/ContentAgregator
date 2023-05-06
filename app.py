@@ -31,7 +31,7 @@ def update_data():
 
 # Create a BackgroundScheduler to update the data every 10 minutes
 scheduler = BackgroundScheduler()
-scheduler.add_job(update_data, 'interval', minutes=10)
+scheduler.add_job(update_data, 'interval', minutes=5)
 
 # Create the Flask app
 app = Flask(__name__)
