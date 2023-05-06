@@ -48,29 +48,27 @@ data = fetch_data(sites)
 # Get data for prices check
 global prices
 prices = getPrices()
+
+
 # Index route
 @app.route("/",methods=["GET", "POST"])
 def index():
     
-
-    if request.method == "GET":
-        # Render the index template and pass the data to it
-        comments=get_comments()
-        return render_template("index.html", data=data,comments=comments)
+    # Render the index template and pass the data to it
+    comments=get_comments()
+    return render_template("index.html", data=data,comments=comments)
     
-    if request.method == "POST":
-        if not request.form.get("comment"):
-            return render_template("index.html", data=data,comments=comments)
-        
-        comment = request.form.get("comment")
-        insert_comment_to_db(comment)
+@app.route("/addComment", methods=["POST"])
+def addcomment():
 
-        # Render the index template and pass the data to it
-        comments=get_comments()
-        return render_template("index.html", data=data,comments=comments)
+    if not request.form.get("comment"):
+            return redirect("/")
     
-    
+    comment = request.form.get("comment")
+    insert_comment_to_db(comment)
 
+    return redirect("/")
+    
 @app.route("/pricechecker", methods=['GET', "POST"])
 def priceChecker():
     return render_template("pricecheck.html", prices=prices)
