@@ -38,7 +38,7 @@ def getData(product,data):
     try:
         title = soup.find(id='productTitle').text
         price = soup.find(class_="a-price-whole").text
-        picture = soup.find(id="main-image-container").find('img')['src']
+        picture = soup.find(id="imgTagWrapperId").find('img')['src']
         try:
             product_data = {
                 'title': title,
@@ -72,7 +72,7 @@ def get_info_about_new_product(link,targetprice):
     try:
         title = soup.find(id='productTitle').text
         price = soup.find(class_="a-price-whole").text
-        picture = soup.find(id="main-image-container").find('img')['src']
+        picture = soup.find(id="imgTagWrapperId").find('img')['src']
         try:
             product_data = {
                 'title': title,

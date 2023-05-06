@@ -13,6 +13,7 @@ plusSigns.forEach(plusSign => {
         plusSign.style.display = 'none';
         // show the form element
         const form = document.querySelector('.form');
+        form.style.opacity = '1';
         form.style.display = 'block';
     });
 });
